@@ -14,3 +14,8 @@
 #      be installed
 #10. make it possible to run the script without sudo. Hint Look into sudoers file use visudo
 
+echo -n Hello enter a package name which you would like yo install
+
+read packageName
+
+echo $packageName
