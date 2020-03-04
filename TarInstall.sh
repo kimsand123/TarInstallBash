@@ -13,9 +13,41 @@
 #9. find the package in apt-cache and prompt to install them and then reinstall the initial package to
 #      be installed
 #10. make it possible to run the script without sudo. Hint Look into sudoers file use visudo
+sourceDownload() {
+    result='You can download this'
+}
 
-echo -n Hello enter a package name which you would like yo install
+dpkgRpmDownload() {
+    result='RPM is gut'
+}
 
-read packageName
+choice='n'
+while [ $choice != 'y' ]
+do 
+    clear
+    echo Hello enter a package name which you would like yo install
 
-echo $packageName
+    read packageName
+
+    echo Are you sure this $packageName is the right package [y/n]
+    read choice
+done
+
+echo Do you want to install $packageName from:
+echo 1. source code
+echo 2. dpkg/rpm
+read choice
+
+echo Enter the download link to download the package.
+read downloadLink
+
+if [ $choice -eq 1 ]
+then 
+    sourceDownload "$packageName" "$downloadLink"
+    echo $result
+elif [ $choice -eq 2 ]
+then
+    dpkgRpmDownload "$packageName" "$downloadLink"
+    echo $result
+fi
+
