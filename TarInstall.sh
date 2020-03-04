@@ -18,6 +18,12 @@ sourceDownload() {
 }
 
 dpkgRpmDownload() {
+    downloadlink = $1
+    packageName = $2
+    echo $packageName
+    echo $downloadLink
+
+    wget $downloadLink$packageName
     result='RPM is gut'
 }
 
@@ -27,8 +33,8 @@ do
     clear
     echo Hello enter a package name which you would like yo install
 
-    read packageName
-
+    #read packageName
+    packageName='nmap-7.80-1.x86_64.rpm'
     echo Are you sure this $packageName is the right package [y/n]
     read choice
 done
@@ -39,7 +45,10 @@ echo 2. dpkg/rpm
 read choice
 
 echo Enter the download link to download the package.
-read downloadLink
+#read downloadLink
+downloadLink='https://nmap.org/dist/'
+
+
 
 if [ $choice -eq 1 ]
 then 
@@ -48,6 +57,7 @@ then
 elif [ $choice -eq 2 ]
 then
     dpkgRpmDownload "$packageName" "$downloadLink"
+    
     echo $result
 fi
 
