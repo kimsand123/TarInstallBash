@@ -24,6 +24,16 @@ dpkgRpmDownload() {
     echo $downloadLink
 
     wget -O /usr/local/src/$packageName $downloadLink$packageName
+    packageSize=${#packageName}
+    echo packageSize is $packageSize
+    echo $(expr substr $packageName $((packageSize-2)) 3)
+    if [ $(expr substr $packageName $((packageSize-2)) 3) == 'rpm' ]
+    then 
+        echo this is an RPM file.
+        cd /usr/local/src/
+        alien -k $packageName
+        rm $packageName
+    fi
     result='RPM is gut'
 }
 clear
@@ -43,8 +53,6 @@ fi
 choice='n'
 while [ $choice != 'y' ]
 do 
-   
-    
     echo Hello enter a package name which you would like yo install
 
     #read packageName
