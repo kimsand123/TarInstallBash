@@ -23,14 +23,28 @@ dpkgRpmDownload() {
     echo $packageName
     echo $downloadLink
 
-    wget $downloadLink$packageName
+    wget -O /usr/local/src/$packageName $downloadLink$packageName
     result='RPM is gut'
 }
+clear
+access=$(stat -c "%a %n" /usr/local/src)
+stringarray=($access)
+permission=$(expr substr ${stringarray[0]} 2 2)
+
+if [ $permission != '77' ]
+then 
+    echo You don\'t have permission to make changes to this folder your permision is ${stringarray[0]} and it should be 777.
+    echo You can change the permission of the folder by using the following command 
+    echo
+    echo sudo chmod 777 /usr/local/src
+    exit 1
+fi
 
 choice='n'
 while [ $choice != 'y' ]
 do 
-    clear
+   
+    
     echo Hello enter a package name which you would like yo install
 
     #read packageName
@@ -49,7 +63,6 @@ echo Enter the download link to download the package.
 downloadLink='https://nmap.org/dist/'
 
 
-
 if [ $choice -eq 1 ]
 then 
     sourceDownload "$packageName" "$downloadLink"
@@ -61,3 +74,4 @@ then
     echo $result
 fi
 
+#stat -c "%a %n" /usr/local/src
